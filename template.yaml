@@ -5,6 +5,11 @@ Description: >
 
   Sample SAM Template for sam-java-hello-world
 
+Parameters:
+  stage:
+    Type: "String"
+    Description: "stage name where the code is deployed like dev, stage, prod"
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -17,6 +22,7 @@ Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      FunctionName: !Sub "${stage}-EmployeeFunction"
       CodeUri: HelloWorldFunction
       Handler: helloworld.App::handleRequest
       Runtime: java11
@@ -30,9 +36,12 @@ Resources:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
-            Method: get
-
+            Path: /create
+            Method: post
+  EmployeeQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub "${stage}-EmployeeQueue"
   myDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -46,6 +55,35 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 3
         WriteCapacityUnits: 2
+  EmployeeTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Employee
+      AttributeDefinitions:
+        - AttributeName: EmployeeId
+          AttributeType: S
+        - AttributeName: LocationId
+          AttributeType: S
+        - AttributeName: DepartmentId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: EmployeeId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: Location-index
+          KeySchema:
+            - AttributeName: LocationId
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: Department-index
+          KeySchema:
+            - AttributeName: DepartmentId
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
