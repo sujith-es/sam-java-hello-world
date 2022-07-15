@@ -33,6 +33,19 @@ Resources:
             Path: /hello
             Method: get
 
+  myDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: input_message
+      AttributeDefinitions:
+        - AttributeName: message
+          AttributeType: S
+      KeySchema:
+        - AttributeName: message
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 2
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM

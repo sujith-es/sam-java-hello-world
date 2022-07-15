@@ -1,0 +1,11 @@
+version = 0.1
+[dev]
+[dev.deploy]
+[dev.deploy.parameters]
+stack_name = "sam-java-hello-world"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-op49p3ppxhb8"
+s3_prefix = "sam-java-hello-world"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
