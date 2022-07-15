@@ -49,7 +49,7 @@ Resources:
   myDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: input_message
+      TableName: actual_message
       AttributeDefinitions:
         - AttributeName: message
           AttributeType: S
