@@ -5,6 +5,11 @@ Description: >
 
   Sample SAM Template for sam-java-hello-world
 
+Parameters:
+    stage:
+      Type: "String"
+      Description: "stage name where the code is deployed like dev, stage, prod"
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -46,19 +51,6 @@ Resources:
           ReadCapacityUnits: 3
           WriteCapacityUnits: 2
 
-  myDynamoDBTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: input_message
-      AttributeDefinitions:
-        - AttributeName: message
-          AttributeType: S
-      KeySchema:
-        - AttributeName: message
-          KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 3
-        WriteCapacityUnits: 2
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
