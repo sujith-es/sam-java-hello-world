@@ -5,6 +5,7 @@ Description: >
 
   Sample SAM Template for sam-java-hello-world
 
+# Input parameter
 Parameters:
   stage:
     Type: "String"
@@ -45,7 +46,7 @@ Resources:
   myDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: input_message
+      TableName:  !Sub "${stage}-input_message"
       AttributeDefinitions:
         - AttributeName: message
           AttributeType: S

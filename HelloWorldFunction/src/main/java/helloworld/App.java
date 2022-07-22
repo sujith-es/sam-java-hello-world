@@ -70,11 +70,4 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
         }
     }
-
-//    private String getPageContents(String address) throws IOException {
-//        URL url = new URL(address);
-//        try (BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()))) {
-//            return br.lines().collect(Collectors.joining(System.lineSeparator()));
-//        }
-//    }
 }
